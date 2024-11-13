@@ -34,7 +34,10 @@ const TodoBox = ({
           todoList.map((res) => {
             const todo = res.title;
             return (
-              <div className="bg-todoList-none px-3.5 py-2 m-3 mt-8 bg-white rounded-lg shadow-lg font-bold">
+              <div
+                key={res.id}
+                className="bg-todoList-none px-3.5 py-2 m-3 mt-8 bg-white rounded-lg shadow-lg font-bold"
+              >
                 {todo}
               </div>
             );
