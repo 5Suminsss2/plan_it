@@ -7,6 +7,7 @@ const TodoBox = ({
   handleSubmit,
   handleNewSubmit,
   handleRemoveTodo,
+  handleCompleteTodo,
   todoList,
   newTodo,
 }: TodoBoxProps) => {
@@ -30,7 +31,11 @@ const TodoBox = ({
           onKeyDown={handleSubmit}
         />
       </div>
-      <TodoLists todoList={todoList} handleRemoveTodo={handleRemoveTodo} />
+      <TodoLists
+        todoList={todoList}
+        handleRemoveTodo={handleRemoveTodo}
+        handleCompleteTodo={handleCompleteTodo}
+      />
     </div>
   );
 };

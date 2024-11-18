@@ -13,6 +13,7 @@ export interface TodoBoxProps {
   handleSubmit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleNewSubmit: (value: string) => void;
   handleRemoveTodo: (id: string) => void;
+  handleCompleteTodo: (id: string) => void;
   todoList: Todo[];
   newTodo: string;
 }
@@ -21,4 +22,5 @@ export interface TodoBoxProps {
 export interface TodoListsProps {
   todoList: Todo[];
   handleRemoveTodo: (id: string) => void;
+  handleCompleteTodo: (id: string) => void;
 }

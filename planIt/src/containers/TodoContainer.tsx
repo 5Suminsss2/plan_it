@@ -42,6 +42,14 @@ const TodoContainer = () => {
     setTodoList(test);
   };
 
+  // 할 일 목록 completed 업데이트 함수
+  const handleCompleteTodo = (id: string) => {
+    const updatedTodoList = todoList.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodoList(updatedTodoList);
+  };
+
   return (
     <>
       <TodoBox
@@ -49,6 +57,7 @@ const TodoContainer = () => {
         handleSubmit={handleSubmit}
         handleNewSubmit={handleNewSubmit}
         handleRemoveTodo={handleRemoveTodo}
+        handleCompleteTodo={handleCompleteTodo}
         todoList={todoList}
         newTodo={newTodo}
       />
