@@ -2,6 +2,8 @@ import { useState } from "react";
 import TodoBox from "../components/todo/TodoBox";
 import dayjs from "dayjs";
 import { Todo } from "../types/todo";
+import _ from "lodash";
+import { v4 as uuidv4 } from "uuid";
 
 const TodoContainer = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
@@ -18,7 +20,7 @@ const TodoContainer = () => {
 
     if (e.key === "Enter") {
       const newTodoObj: Todo = {
-        id: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
+        id: uuidv4(),
         title: newTodo,
         completed: false,
       };
@@ -32,12 +34,21 @@ const TodoContainer = () => {
     setNewTodo(value);
   };
 
+  // 할 일 목록 삭제 함수
+  const handleRemoveTodo = (id: string) => {
+    const test = _.remove(todoList, (n) => {
+      return n.id !== id;
+    });
+    setTodoList(test);
+  };
+
   return (
     <>
       <TodoBox
         currentDate={currentDate}
         handleSubmit={handleSubmit}
         handleNewSubmit={handleNewSubmit}
+        handleRemoveTodo={handleRemoveTodo}
         todoList={todoList}
         newTodo={newTodo}
       />

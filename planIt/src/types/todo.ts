@@ -12,6 +12,13 @@ export interface TodoBoxProps {
   currentDate: string;
   handleSubmit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleNewSubmit: (value: string) => void;
+  handleRemoveTodo: (id: string) => void;
   todoList: Todo[];
   newTodo: string;
+}
+
+//- TodoLists 컴포넌츠 props 타입
+export interface TodoListsProps {
+  todoList: Todo[];
+  handleRemoveTodo: (id: string) => void;
 }
