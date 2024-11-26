@@ -48,7 +48,7 @@ const TodoLists = ({
           );
         })
       ) : (
-        <span className="inline-block bg-[#f94c4c] text-[#ffffff] font-bold px-3.5 py-2 m-3 mt-6  rounded-lg shadow-lg">
+        <span className="inline-block bg-[#f94c4c] text-[#ffffff] font-bold px-3.5 py-2 m-3 mt-6  rounded-lg shadow-lg cursor-default">
           할 일을 추가해주라구~!
         </span>
       )}
