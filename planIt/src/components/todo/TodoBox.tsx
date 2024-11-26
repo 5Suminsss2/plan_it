@@ -1,7 +1,7 @@
 import { TodoBoxProps } from "../../types/todo";
 import "./TodoBox.css";
 import TodoLists from "./TodoLists";
-import TodoTopicModal from "../modals/TodoTopicModal";
+import TodoTopicModalContainer from "../../containers/TodoTopicModalContainer";
 
 const TodoBox = ({
   currentDate,
@@ -46,7 +46,7 @@ const TodoBox = ({
         handleCompleteTodo={handleCompleteTodo}
       />
       {modals.modal_topic && (
-        <TodoTopicModal handleShowModal={handleShowModal} />
+        <TodoTopicModalContainer handleShowModal={handleShowModal} />
       )}
     </div>
   );
