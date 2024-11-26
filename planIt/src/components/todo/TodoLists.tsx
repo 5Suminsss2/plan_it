@@ -1,3 +1,4 @@
+import { todoStates } from "../../common";
 import { TodoListsProps } from "../../types/todo";
 import "./TodoBox.css";
 import _ from "lodash";
@@ -15,17 +16,25 @@ const TodoLists = ({
           return (
             <div
               key={res.id}
-              className="flex justify-between bg-[#f8f8fb] px-3.5 py-2 m-3 mt-5 bg-white rounded-lg shadow-lg font-bold"
+              className="flex justify-between items-center bg-[#f0f0f5] px-3.5 py-2 m-3 mt-5 rounded-lg shadow-lg font-bold"
             >
-              <label>
-                <input
-                  type="checkbox"
-                  checked={res.completed}
-                  onChange={() => {
-                    handleCompleteTodo(res.id);
-                  }}
-                />
-              </label>
+              <select
+                className="select select-bordered select-sm"
+                onChange={(e) => {
+                  handleCompleteTodo(res.id, e.target.value);
+                }}
+              >
+                {todoStates.map((option) => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                    disabled={option.disabled}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+
               <div>{todo}</div>
               <div
                 onClick={() => {
@@ -39,7 +48,7 @@ const TodoLists = ({
           );
         })
       ) : (
-        <span className="inline-block bg-[#f94c4c] text-[#000] font-bold px-3.5 py-2 m-3 mt-6 bg-white rounded-lg shadow-lg">
+        <span className="inline-block bg-[#f94c4c] text-[#ffffff] font-bold px-3.5 py-2 m-3 mt-6  rounded-lg shadow-lg">
           할 일을 추가해주라구~!
         </span>
       )}
