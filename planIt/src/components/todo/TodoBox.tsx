@@ -1,6 +1,7 @@
 import { TodoBoxProps } from "../../types/todo";
 import "./TodoBox.css";
 import TodoLists from "./TodoLists";
+import TodoTopicModal from "../modals/TodoTopicModal";
 
 const TodoBox = ({
   currentDate,
@@ -8,16 +9,24 @@ const TodoBox = ({
   handleNewSubmit,
   handleRemoveTodo,
   handleCompleteTodo,
+  handleShowModal,
   todoList,
   newTodo,
+  modals,
 }: TodoBoxProps) => {
   return (
     <div className="todo-box">
       <section className="flex justify-between px-3.5 py-2">
         <div className="text-xl font-bold">{currentDate}</div>
         <div className="flex space-x-5">
-          <div>못한 todo 팝업</div>
-          <div>루틴팝업</div>
+          <button
+            className="btn btn-active btn-neutral"
+            onClick={() => handleShowModal("modal_topic", true)}
+          >
+            토픽추가
+          </button>
+          <button className="btn btn-active btn-neutral">못한 todo 팝업</button>
+          <button className="btn btn-active btn-neutral">루틴 팝업</button>
         </div>
       </section>
       <div className="flex justify-center items-center m-3">
@@ -36,6 +45,9 @@ const TodoBox = ({
         handleRemoveTodo={handleRemoveTodo}
         handleCompleteTodo={handleCompleteTodo}
       />
+      {modals.modal_topic && (
+        <TodoTopicModal handleShowModal={handleShowModal} />
+      )}
     </div>
   );
 };

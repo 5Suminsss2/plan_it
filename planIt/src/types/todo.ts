@@ -20,7 +20,9 @@ export interface TodoBoxProps extends TodoHandlers {
   currentDate: string;
   handleSubmit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleNewSubmit: (value: string) => void;
+  handleShowModal: (modalId: string, isOpen: boolean) => void;
   newTodo: string;
+  modals: Record<string, boolean>;
 }
 
 //- TodoListsProps 타입

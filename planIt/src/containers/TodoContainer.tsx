@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 const TodoContainer = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState<string>("");
+  const [modals, setModals] = useState<Record<string, boolean>>({});
 
   // 현재 날짜
   const currentDate = dayjs().format("YY.MM.DD");
@@ -50,6 +51,14 @@ const TodoContainer = () => {
     setTodoList(updatedTodoList);
   };
 
+  // 모달 노출 여부 제어 함수
+  const handleShowModal = (modalId: string, isOpen: boolean) => {
+    setModals((prev) => ({
+      ...prev,
+      [modalId]: isOpen,
+    }));
+  };
+
   return (
     <>
       <TodoBox
@@ -58,8 +67,10 @@ const TodoContainer = () => {
         handleNewSubmit={handleNewSubmit}
         handleRemoveTodo={handleRemoveTodo}
         handleCompleteTodo={handleCompleteTodo}
+        handleShowModal={handleShowModal}
         todoList={todoList}
         newTodo={newTodo}
+        modals={modals}
       />
     </>
   );
