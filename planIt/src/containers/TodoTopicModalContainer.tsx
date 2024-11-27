@@ -38,7 +38,7 @@ const TodoTopicModalContainer = ({
     setTopicTitle(title);
   };
 
-  // 할 일 목록 삭제 함수
+  // 토픽 삭제 함수
   const handleRemoveTopic = (id: string) => {
     const test = _.remove(topicList, (n) => {
       return n.id !== id;
