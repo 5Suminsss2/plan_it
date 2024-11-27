@@ -3,11 +3,12 @@ import TodoTopicModal from "../components/modals/TodoTopicModal";
 import { TodoTopicModalContainerProps, Topic } from "../types/modal";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
+import topicStore from "../store/topic";
 
 const TodoTopicModalContainer = ({
   handleShowModal,
 }: TodoTopicModalContainerProps) => {
-  const [topicList, setTopicList] = useState<Topic[]>([]); // 총 토픽 리스트
+  const { topicList, updateTopicList } = topicStore((state) => state);
   const [topicTitle, setTopicTitle] = useState(""); // 토픽 제목
   const [topicColor, setTopicColor] = useState(""); // 토픽 색상
 
@@ -27,7 +28,7 @@ const TodoTopicModalContainer = ({
         title: topicTitle,
         color: topicColor,
       };
-      setTopicList([...topicList, newTopicObj]);
+      updateTopicList([...topicList, newTopicObj]);
       setTopicTitle("");
       setTopicColor("");
     }
@@ -43,7 +44,7 @@ const TodoTopicModalContainer = ({
     const test = _.remove(topicList, (n) => {
       return n.id !== id;
     });
-    setTopicList(test);
+    updateTopicList(test);
   };
 
   return (
