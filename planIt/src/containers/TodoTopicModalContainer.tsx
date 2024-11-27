@@ -31,17 +31,6 @@ const TodoTopicModalContainer = ({
       setTopicTitle("");
       setTopicColor("");
     }
-
-    // if (e.key === "Enter") {
-    //   const newTopicObj: Topic = {
-    //     id: uuidv4(),
-    //     title: topicTitle,
-    //     color: topicColor,
-    //   };
-    //   setTopicList([...topicList, newTopicObj]);
-    //   setTopicTitle("");
-    //   setTopicColor("");
-    // }
   };
 
   // 새로운 토픽 지정 함수
