@@ -10,8 +10,10 @@ export interface TodoTopicModalContainerProps {
 
 export interface TodoTopicModalProps extends TodoTopicModalContainerProps {
   handleTopicSubmit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  handleNewTopicSubmit: (value: string) => void;
+  handleTopicTitle: (value: string) => void;
   handleRemoveTopic: (id: string) => void;
-  newTopic: string;
+  topicTitle: string;
   topicList: Topic[];
+  topicColor: string;
+  setTopicColor: (value: string) => void;
 }

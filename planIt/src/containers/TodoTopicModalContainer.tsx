@@ -7,29 +7,46 @@ import { v4 as uuidv4 } from "uuid";
 const TodoTopicModalContainer = ({
   handleShowModal,
 }: TodoTopicModalContainerProps) => {
-  const [topicList, setTopicList] = useState<Topic[]>([]);
-  const [newTopic, setNewTopic] = useState<string>("");
+  const [topicList, setTopicList] = useState<Topic[]>([]); // 총 토픽 리스트
+  const [topicTitle, setTopicTitle] = useState(""); // 토픽 제목
+  const [topicColor, setTopicColor] = useState(""); // 토픽 색상
 
   // 토픽 제출 함수
   const handleTopicSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && _.isEmpty(newTopic)) {
-      return alert("토픽을 입력하라구~!");
-    }
-
     if (e.key === "Enter") {
+      // 토핑 입력 관련 validation
+      if (_.isEmpty(topicTitle)) {
+        return alert("토픽을 입력하라구~!");
+      }
+      if (_.isEmpty(topicColor)) {
+        return alert("컬러 선택하라구~!");
+      }
+
       const newTopicObj: Topic = {
         id: uuidv4(),
-        title: newTopic,
-        color: "#f94c4c",
+        title: topicTitle,
+        color: topicColor,
       };
       setTopicList([...topicList, newTopicObj]);
-      setNewTopic("");
+      setTopicTitle("");
+      setTopicColor("");
     }
+
+    // if (e.key === "Enter") {
+    //   const newTopicObj: Topic = {
+    //     id: uuidv4(),
+    //     title: topicTitle,
+    //     color: topicColor,
+    //   };
+    //   setTopicList([...topicList, newTopicObj]);
+    //   setTopicTitle("");
+    //   setTopicColor("");
+    // }
   };
 
   // 새로운 토픽 지정 함수
-  const handleNewTopicSubmit = (value: string) => {
-    setNewTopic(value);
+  const handleTopicTitle = (title: string) => {
+    setTopicTitle(title);
   };
 
   // 할 일 목록 삭제 함수
@@ -44,10 +61,12 @@ const TodoTopicModalContainer = ({
     <TodoTopicModal
       handleShowModal={handleShowModal}
       handleTopicSubmit={handleTopicSubmit}
-      handleNewTopicSubmit={handleNewTopicSubmit}
+      handleTopicTitle={handleTopicTitle}
       handleRemoveTopic={handleRemoveTopic}
-      newTopic={newTopic}
+      topicTitle={topicTitle}
       topicList={topicList}
+      topicColor={topicColor}
+      setTopicColor={setTopicColor}
     />
   );
 };
