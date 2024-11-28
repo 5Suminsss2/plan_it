@@ -34,7 +34,6 @@ const TodoLists = ({
                   </option>
                 ))}
               </select>
-
               <div>{todo}</div>
               <div
                 onClick={() => {

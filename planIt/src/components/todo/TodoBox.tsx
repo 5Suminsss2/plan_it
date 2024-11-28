@@ -6,13 +6,16 @@ import TodoTopicModalContainer from "../../containers/TodoTopicModalContainer";
 const TodoBox = ({
   currentDate,
   handleSubmit,
-  handleNewSubmit,
+  handleNewTodo,
+  handleSelectedTopic,
   handleRemoveTodo,
   handleCompleteTodo,
   handleShowModal,
   todoList,
+  topicList,
   newTodo,
   modals,
+  selectedTopic,
 }: TodoBoxProps) => {
   return (
     <div className="todo-box">
@@ -30,12 +33,26 @@ const TodoBox = ({
         </div>
       </section>
       <div className="flex justify-center items-center m-3">
+        <select
+          className="select select-bordered select-sm h-[2.5rem] w-[9rem] mr-2"
+          onChange={(e) => {
+            handleSelectedTopic(e.target.value);
+          }}
+          value={selectedTopic}
+        >
+          <option>토픽 선택</option>
+          {topicList.map((option) => (
+            <option key={option.id} value={option.title}>
+              {option.title}
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           value={newTodo}
           className="input-box"
           onChange={(e) => {
-            handleNewSubmit(e.target.value);
+            handleNewTodo(e.target.value);
           }}
           onKeyDown={handleSubmit}
         />
