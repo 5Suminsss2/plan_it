@@ -73,6 +73,17 @@ const TodoContainer = () => {
     }));
   };
 
+  // - todolist를 같은 topic으로 분류하기
+  const groupByTopic = (arr: Todo[]): Record<string, Todo[]> => {
+    return arr.reduce((groups: Record<string, Todo[]>, item) => {
+      (groups[item.topic] = groups[item.topic] || []).push(item);
+      return groups;
+    }, {});
+  };
+
+  // topic으로 그룹화된 todolist
+  const groupedData = groupByTopic(todoList);
+
   useEffect(() => {
     setSelectedTopic("");
   }, [topicList]);
@@ -92,6 +103,7 @@ const TodoContainer = () => {
         newTodo={newTodo}
         modals={modals}
         selectedTopic={selectedTopic}
+        groupedData={groupedData}
       />
     </>
   );

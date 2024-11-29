@@ -15,6 +15,7 @@ interface TodoHandlers {
   handleRemoveTodo: (id: string) => void;
   handleCompleteTodo: (id: string, state: string) => void;
   todoList: Todo[];
+  groupedData: Record<string, Todo[]>;
 }
 
 //- TodoBoxProps 타입

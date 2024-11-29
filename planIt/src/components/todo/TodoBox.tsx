@@ -16,6 +16,7 @@ const TodoBox = ({
   newTodo,
   modals,
   selectedTopic,
+  groupedData,
 }: TodoBoxProps) => {
   return (
     <div className="todo-box">
@@ -59,6 +60,7 @@ const TodoBox = ({
       </div>
       <TodoLists
         todoList={todoList}
+        groupedData={groupedData}
         handleRemoveTodo={handleRemoveTodo}
         handleCompleteTodo={handleCompleteTodo}
       />
