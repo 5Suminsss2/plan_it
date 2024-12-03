@@ -60,6 +60,7 @@ const TodoBox = ({
       </div>
       <TodoLists
         todoList={todoList}
+        topicList={topicList}
         groupedData={groupedData}
         handleRemoveTodo={handleRemoveTodo}
         handleCompleteTodo={handleCompleteTodo}

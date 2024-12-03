@@ -5,6 +5,7 @@ import _ from "lodash";
 
 const TodoLists = ({
   todoList,
+  topicList,
   groupedData,
   handleRemoveTodo,
   handleCompleteTodo,
@@ -13,8 +14,18 @@ const TodoLists = ({
     <section>
       {!_.isEmpty(todoList) ? (
         Object.entries(groupedData).map(([topic, items]) => (
-          <div key={topic} style={{ marginBottom: "20px" }}>
-            <h3>Topic: {topic}</h3>
+          <div key={topic} className="mb-[20px]">
+            <div className="flex justify-start px-3.5 ">
+              <div
+                className="px-3.5 p-1 font-bold rounded-md shadow-md inline-block min-w-[50px]"
+                style={{
+                  backgroundColor:
+                    `${_.find(topicList, { title: topic })?.color}` || "#fff",
+                }}
+              >
+                {topic}
+              </div>
+            </div>
             <ul>
               {items.map((item) => (
                 <div

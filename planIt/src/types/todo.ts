@@ -15,6 +15,7 @@ interface TodoHandlers {
   handleRemoveTodo: (id: string) => void;
   handleCompleteTodo: (id: string, state: string) => void;
   todoList: Todo[];
+  topicList: Topic[] | [];
   groupedData: Record<string, Todo[]>;
 }
 
@@ -27,7 +28,6 @@ export interface TodoBoxProps extends TodoHandlers {
   handleShowModal: (modalId: string, isOpen: boolean) => void;
   newTodo: string;
   modals: Record<string, boolean>;
-  topicList: Topic[] | [];
   selectedTopic: string;
 }
 
