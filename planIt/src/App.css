@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  user-select: none; /* 텍스트 선택 방지 */
 }
 
 .logo {

@@ -27,38 +27,56 @@ const TodoLists = ({
               </div>
             </div>
             <ul>
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex justify-between items-center bg-[#f0f0f5] px-3.5 py-2 m-3 mt-5 rounded-lg shadow-lg font-bold"
-                >
-                  <select
-                    className="select select-bordered select-sm"
-                    onChange={(e) => {
-                      handleCompleteTodo(item.id, e.target.value);
-                    }}
-                  >
-                    {todoStates.map((option) => (
-                      <option
-                        key={option.value}
-                        value={option.value}
-                        disabled={option.disabled}
-                      >
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                  <div>{item.title}</div>
+              {items
+                .slice() // 원본 배열 변경 방지
+                .sort((todo) => (todo.state === "completed" ? 1 : -1)) // completed를 아래로
+                .map((item) => (
                   <div
-                    onClick={() => {
-                      handleRemoveTodo(item.id);
+                    key={item.id}
+                    className={
+                      "flex justify-between items-center px-3.5 py-2 m-3 mt-5 rounded-lg shadow-lg"
+                    }
+                    style={{
+                      backgroundColor:
+                        item.state === "completed" ? "#ccc" : "#f0f0f5",
                     }}
-                    className="hover:cursor-pointer"
                   >
-                    ✖
+                    <select
+                      className="select select-bordered select-sm"
+                      value={item.state} // 현재 상태를 반영
+                      onChange={(e) => {
+                        handleCompleteTodo(item.id, e.target.value);
+                      }}
+                    >
+                      {todoStates.map((option) => (
+                        <option
+                          key={option.value}
+                          value={option.value}
+                          disabled={option.disabled}
+                        >
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                    <div
+                      style={{
+                        fontWeight: item.state === "completed" ? "300" : "700",
+                        textDecoration:
+                          item.state === "completed" ? "line-through" : "",
+                      }}
+                    >
+                      {item.title}
+                    </div>
+                    <div
+                      onClick={() => {
+                        handleRemoveTodo(item.id);
+                      }}
+                      className="hover:cursor-pointer"
+                    >
+                      ✖
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </ul>
           </div>
         ))
