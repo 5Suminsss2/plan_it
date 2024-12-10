@@ -7,4 +7,4 @@
 # Electron 문제 해결 방안
 
 - 파일 경로 찾지 못하는 오류 => ./ 붙이기
-- broswerRouter 지원x => hashRouter로 수정
+- broswerRouter 지원x => hashRouter로 수정 (https://berom.tistory.com/582)

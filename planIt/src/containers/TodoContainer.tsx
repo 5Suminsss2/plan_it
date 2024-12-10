@@ -5,6 +5,8 @@ import { Todo } from "../types/todo";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import topicStore from "../store/topic";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TodoContainer = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
@@ -20,11 +22,11 @@ const TodoContainer = () => {
   const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (newTodo === "") {
-        return alert("할 일을 입력하라구~!");
+        return toast("할 일을 입력하라구~!");
       }
 
       if (selectedTopic === "") {
-        return alert("토픽을 선택하라구~!");
+        return toast("토픽을 선택하라구~!");
       }
 
       const newTodoObj: Todo = {
@@ -105,6 +107,7 @@ const TodoContainer = () => {
         selectedTopic={selectedTopic}
         groupedData={groupedData}
       />
+      <ToastContainer position="top-center" />
     </>
   );
 };

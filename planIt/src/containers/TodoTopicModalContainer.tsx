@@ -4,6 +4,8 @@ import { TodoTopicModalContainerProps, Topic } from "../types/modal";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import topicStore from "../store/topic";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TodoTopicModalContainer = ({
   handleShowModal,
@@ -17,10 +19,10 @@ const TodoTopicModalContainer = ({
     if (e.key === "Enter") {
       // 토핑 입력 관련 validation
       if (_.isEmpty(topicTitle)) {
-        return alert("토픽을 입력하라구~!");
+        return toast("토픽을 입력하라구~!");
       }
       if (_.isEmpty(topicColor)) {
-        return alert("컬러 선택하라구~!");
+        return toast("컬러 선택하라구~!");
       }
 
       const newTopicObj: Topic = {
@@ -48,16 +50,19 @@ const TodoTopicModalContainer = ({
   };
 
   return (
-    <TodoTopicModal
-      handleShowModal={handleShowModal}
-      handleTopicSubmit={handleTopicSubmit}
-      handleTopicTitle={handleTopicTitle}
-      handleRemoveTopic={handleRemoveTopic}
-      topicTitle={topicTitle}
-      topicList={topicList}
-      topicColor={topicColor}
-      setTopicColor={setTopicColor}
-    />
+    <>
+      <TodoTopicModal
+        handleShowModal={handleShowModal}
+        handleTopicSubmit={handleTopicSubmit}
+        handleTopicTitle={handleTopicTitle}
+        handleRemoveTopic={handleRemoveTopic}
+        topicTitle={topicTitle}
+        topicList={topicList}
+        topicColor={topicColor}
+        setTopicColor={setTopicColor}
+      />
+      <ToastContainer position="top-center" />
+    </>
   );
 };
 
