@@ -17,3 +17,8 @@ export interface TodoTopicModalProps extends TodoTopicModalContainerProps {
   topicColor: string;
   setTopicColor: (value: string) => void;
 }
+
+export interface ModalHeaderProps extends TodoTopicModalContainerProps {
+  title: string;
+  modalId: string;
+}

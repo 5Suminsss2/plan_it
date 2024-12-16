@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "electron-build": "electron-builder",
     "lint": "eslint .",
     "preview": "vite preview",
     "electron": "electron ."
@@ -32,6 +33,8 @@
     "autoprefixer": "^10.4.20",
     "daisyui": "^4.12.14",
     "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "electron-updater": "^6.3.9",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",

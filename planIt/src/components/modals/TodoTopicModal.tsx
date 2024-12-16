@@ -1,6 +1,7 @@
 import { TodoTopicModalProps } from "../../types/modal";
 import { HexColorPicker } from "react-colorful";
 import _ from "lodash";
+import ModalHeader from "./ModalHeader";
 
 const TodoTopicModal = ({
   handleShowModal,
@@ -15,19 +16,11 @@ const TodoTopicModal = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ">
       <div className="modal-box h-[50vh]">
-        <div className="flex justify-between">
-          <h3 className="font-bold text-lg mt-2">토픽 추가</h3>
-          <form method="dialog">
-            <button
-              className="btn rounded-full bg-[#f8f9fb] p-3 shadow-md hover:shadow-lg active:shadow-md transition-shadow"
-              onClick={() => {
-                handleShowModal("modal_topic", false);
-              }}
-            >
-              ✖️
-            </button>
-          </form>
-        </div>
+        <ModalHeader
+          handleShowModal={handleShowModal}
+          title="토픽 추가"
+          modalId="modal_topic"
+        />
 
         <div className="modal-action flex-col ">
           <div className="flex items-center space-x-3">
