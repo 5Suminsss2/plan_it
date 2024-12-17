@@ -1,4 +1,4 @@
-import { todoStates } from "../../common";
+import { todoStateName, todoStates } from "../../common";
 import { TodoListsProps } from "../../types/todo";
 import "./TodoBox.css";
 import _ from "lodash";
@@ -29,7 +29,9 @@ const TodoLists = ({
             <ul>
               {items
                 .slice() // 원본 배열 변경 방지
-                .sort((todo) => (todo.state === "completed" ? 1 : -1)) // completed를 아래로
+                .sort((todo) =>
+                  todo.state === todoStateName.completedTodo ? 1 : -1
+                ) // completed를 아래로
                 .map((item) => (
                   <div
                     key={item.id}
@@ -38,7 +40,9 @@ const TodoLists = ({
                     }
                     style={{
                       backgroundColor:
-                        item.state === "completed" ? "#ccc" : "#f0f0f5",
+                        item.state === todoStateName.completedTodo
+                          ? "#ccc"
+                          : "#f0f0f5",
                     }}
                   >
                     <select
@@ -60,9 +64,14 @@ const TodoLists = ({
                     </select>
                     <div
                       style={{
-                        fontWeight: item.state === "completed" ? "300" : "700",
+                        fontWeight:
+                          item.state === todoStateName.completedTodo
+                            ? "300"
+                            : "700",
                         textDecoration:
-                          item.state === "completed" ? "line-through" : "",
+                          item.state === todoStateName.completedTodo
+                            ? "line-through"
+                            : "",
                       }}
                     >
                       {item.title}
