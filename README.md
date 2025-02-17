@@ -26,6 +26,8 @@ $ yarn install
 $ yarn start
 ```
 
+- 테스트 : postman 실행
+
 #### Frontend
 
 ```
