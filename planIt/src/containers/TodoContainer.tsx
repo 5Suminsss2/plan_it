@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import topicStore from "../store/topic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { todosApi } from "../api/api";
 
 const TodoContainer = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
@@ -89,6 +90,21 @@ const TodoContainer = () => {
   useEffect(() => {
     setSelectedTopic("");
   }, [topicList]);
+
+  // 데이터 todoList 가져오기
+  // Todo: 데이터 변경할때마다 다시 todo 데이터 불러오기
+  useEffect(() => {
+    const getTodos = async () => {
+      try {
+        const data = await todosApi.getTodos();
+        setTodoList(data);
+      } catch (error) {
+        console.error("Failed to fetch todos", error);
+      }
+    };
+
+    getTodos();
+  }, []);
 
   return (
     <>
