@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Todo } from "../types/todo";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL, // Vite 환경 변수 사용
@@ -14,7 +15,7 @@ export const todosApi = {
     return response.data;
   },
 
-  addTodo: async (todo: { title: string; completed: boolean }) => {
+  addTodo: async (todo: Todo) => {
     const response = await apiClient.post("/api/todos", todo);
     return response.data;
   },

@@ -15,12 +15,13 @@ const TodoContainer = () => {
   const [selectedTopic, setSelectedTopic] = useState<string>("");
   const [modals, setModals] = useState<Record<string, boolean>>({});
   const { topicList } = topicStore((state) => state);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // 현재 날짜
   const currentDate = dayjs().format("YY.MM.DD");
 
   // 할일목록 제출 함수
-  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (newTodo === "") {
         return toast("할 일을 입력하라구~!");
@@ -36,9 +37,11 @@ const TodoContainer = () => {
         topic: selectedTopic,
         state: "pre",
       };
-      setTodoList([...todoList, newTodoObj]);
       setNewTodo("");
       setSelectedTopic("");
+
+      await todosApi.addTodo(newTodoObj);
+      setRefreshTrigger((prev) => prev + 1); // 데이터 todolist 리프레시
     }
   };
 
@@ -92,7 +95,6 @@ const TodoContainer = () => {
   }, [topicList]);
 
   // 데이터 todoList 가져오기
-  // Todo: 데이터 변경할때마다 다시 todo 데이터 불러오기
   useEffect(() => {
     const getTodos = async () => {
       try {
@@ -104,7 +106,7 @@ const TodoContainer = () => {
     };
 
     getTodos();
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <>
