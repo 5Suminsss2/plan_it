@@ -34,7 +34,7 @@ const TodoLists = ({
                 ) // completed를 아래로
                 .map((item) => (
                   <div
-                    key={item.id}
+                    key={item._id}
                     className={
                       "flex justify-between items-center px-3.5 py-2 m-3 mt-5 rounded-lg shadow-lg"
                     }
@@ -49,7 +49,7 @@ const TodoLists = ({
                       className="select select-bordered select-sm"
                       value={item.state} // 현재 상태를 반영
                       onChange={(e) => {
-                        handleCompleteTodo(item.id, e.target.value);
+                        handleCompleteTodo(item._id, e.target.value);
                       }}
                     >
                       {todoStates.map((option) => (
@@ -78,7 +78,7 @@ const TodoLists = ({
                     </div>
                     <div
                       onClick={() => {
-                        handleRemoveTodo(item.id);
+                        handleRemoveTodo(item._id);
                       }}
                       className="hover:cursor-pointer"
                     >

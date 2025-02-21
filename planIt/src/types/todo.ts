@@ -3,7 +3,7 @@ import { Topic } from "./modal";
 
 // 각 todo의 타입
 export interface Todo {
-  id: string;
+  _id: string;
   title: string;
   state: string;
   topic: string;

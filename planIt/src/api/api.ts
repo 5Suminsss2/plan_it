@@ -20,7 +20,7 @@ export const todosApi = {
     return response.data;
   },
 
-  deleteTodo: async (id: number) => {
+  deleteTodo: async (id: string) => {
     await apiClient.delete(`/api/todos/${id}`);
   },
 };

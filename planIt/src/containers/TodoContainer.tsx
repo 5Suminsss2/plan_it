@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import TodoBox from "../components/todo/TodoBox";
 import dayjs from "dayjs";
 import { Todo } from "../types/todo";
-import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import topicStore from "../store/topic";
 import { ToastContainer, toast } from "react-toastify";
@@ -32,7 +31,7 @@ const TodoContainer = () => {
       }
 
       const newTodoObj: Todo = {
-        id: uuidv4(),
+        _id: uuidv4().replace(/-/g, ""),
         title: newTodo,
         topic: selectedTopic,
         state: "pre",
@@ -56,17 +55,16 @@ const TodoContainer = () => {
   };
 
   // 할 일 목록 삭제 함수
-  const handleRemoveTodo = (id: string) => {
-    const test = _.remove(todoList, (n) => {
-      return n.id !== id;
-    });
-    setTodoList(test);
+  const handleRemoveTodo = async (id: string) => {
+    await todosApi.deleteTodo(id);
+    // Todo: delete 성공했을 때 trigger 반영하기
+    setRefreshTrigger((prev) => prev + 1); // 데이터 todolist 리프레시
   };
 
   // 할 일 목록 state 업데이트 함수
   const handleCompleteTodo = (id: string, state: string) => {
     const updatedTodoList = todoList.map((todo) =>
-      todo.id === id ? { ...todo, state: state } : todo
+      todo._id === id ? { ...todo, state: state } : todo
     );
     setTodoList(updatedTodoList);
   };

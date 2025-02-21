@@ -15,8 +15,8 @@ router.get("/todos", async (req, res) => {
 // 📌 POST 요청: 새로운 Todo 추가
 router.post("/todos", async (req, res) => {
   try {
-    const { title, topic, state } = req.body;
-    const newTodo = new Todo({ title, topic, state });
+    const { _id, title, topic, state } = req.body;
+    const newTodo = new Todo({ _id, title, topic, state });
     await newTodo.save();
     res.status(201).json(newTodo);
   } catch (error) {
