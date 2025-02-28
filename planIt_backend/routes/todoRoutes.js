@@ -44,14 +44,13 @@ router.delete("/todos/:id", async (req, res) => {
 router.put("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params; // URL에서 id 가져오기
-    const { title, complete } = req.body; // 요청 본문에서 변경할 값 가져오기
+    const { title, state } = req.body; // 요청 본문에서 변경할 값 가져오기
 
-    const updatedTodo = await Todo.findByIdAndUpdate(id, { title, complete });
+    const updatedTodo = await Todo.findByIdAndUpdate(id, { title, state });
 
     if (!updatedTodo) {
       return res.status(404).json({ error: "Todo not found" });
     }
-
     res.json(updatedTodo); // 업데이트된 Todo 반환
   } catch (error) {
     res.status(500).json({ error: "Failed to update todo" });

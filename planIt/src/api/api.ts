@@ -15,12 +15,19 @@ export const todosApi = {
     return response.data;
   },
 
+  // 데이터 todo 추가
   addTodo: async (todo: Todo) => {
     const response = await apiClient.post("/api/todos", todo);
     return response.data;
   },
 
+  // 데이터 todo 삭제
   deleteTodo: async (id: string) => {
     await apiClient.delete(`/api/todos/${id}`);
+  },
+
+  // 데이터 todo 수정
+  updateTodo: async (id: string, todo: Partial<Todo>) => {
+    await apiClient.put(`/api/todos/${id}`, todo);
   },
 };

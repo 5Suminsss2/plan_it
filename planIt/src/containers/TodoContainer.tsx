@@ -62,11 +62,9 @@ const TodoContainer = () => {
   };
 
   // 할 일 목록 state 업데이트 함수
-  const handleCompleteTodo = (id: string, state: string) => {
-    const updatedTodoList = todoList.map((todo) =>
-      todo._id === id ? { ...todo, state: state } : todo
-    );
-    setTodoList(updatedTodoList);
+  const handleCompleteTodo = async (id: string, state: string) => {
+    await todosApi.updateTodo(id, { state: state });
+    setRefreshTrigger((prev) => prev + 1); // 데이터 todolist 리프레시
   };
 
   // 모달 노출 여부 제어 함수
