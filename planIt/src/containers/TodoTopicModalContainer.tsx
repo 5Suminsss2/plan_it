@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoTopicModal from "../components/modals/TodoTopicModal";
 import { TodoTopicModalContainerProps, Topic } from "../types/modal";
 import _ from "lodash";
@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import topicStore from "../store/topic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { topicApi } from "../api/api";
 
 const TodoTopicModalContainer = ({
   handleShowModal,
@@ -13,9 +14,12 @@ const TodoTopicModalContainer = ({
   const { topicList, updateTopicList } = topicStore((state) => state);
   const [topicTitle, setTopicTitle] = useState(""); // 토픽 제목
   const [topicColor, setTopicColor] = useState(""); // 토픽 색상
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // 토픽 제출 함수
-  const handleTopicSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTopicSubmit = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Enter") {
       // 토핑 입력 관련 validation
       if (_.isEmpty(topicTitle)) {
@@ -26,11 +30,13 @@ const TodoTopicModalContainer = ({
       }
 
       const newTopicObj: Topic = {
-        id: uuidv4(),
+        _id: uuidv4().replace(/-/g, ""),
         title: topicTitle,
         color: topicColor,
       };
-      updateTopicList([...topicList, newTopicObj]);
+      await topicApi.addTopic(newTopicObj);
+      setRefreshTrigger((prev) => prev + 1); // topic 데이터 리프레시
+
       setTopicTitle("");
       setTopicColor("");
     }
@@ -42,12 +48,27 @@ const TodoTopicModalContainer = ({
   };
 
   // 토픽 삭제 함수
+  // todo: topic 삭제 api함수 만들기
   const handleRemoveTopic = (id: string) => {
-    const test = _.remove(topicList, (n) => {
-      return n.id !== id;
-    });
-    updateTopicList(test);
+    // const test = _.remove(topicList, (n) => {
+    //   return n.id !== id;
+    // });
+    // updateTopicList(test);
   };
+
+  // topic 데이터 가져오기
+  useEffect(() => {
+    const getTopic = async () => {
+      try {
+        const data = await topicApi.getTopic();
+        updateTopicList(data);
+      } catch (error) {
+        console.error("Failed to fetch todos", error);
+      }
+    };
+
+    getTopic();
+  }, [refreshTrigger, updateTopicList]);
 
   return (
     <>

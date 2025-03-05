@@ -6,14 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 import topicStore from "../store/topic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { todosApi } from "../api/api";
+import { todosApi, topicApi } from "../api/api";
 
 const TodoContainer = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState<string>("");
   const [selectedTopic, setSelectedTopic] = useState<string>("");
   const [modals, setModals] = useState<Record<string, boolean>>({});
-  const { topicList } = topicStore((state) => state);
+  const { topicList, updateTopicList } = topicStore((state) => state);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // 현재 날짜
@@ -103,6 +103,20 @@ const TodoContainer = () => {
 
     getTodos();
   }, [refreshTrigger]);
+
+  // topic 가져오기
+  useEffect(() => {
+    const getTopic = async () => {
+      try {
+        const data = await topicApi.getTopic();
+        updateTopicList(data);
+      } catch (error) {
+        console.error("Failed to fetch todos", error);
+      }
+    };
+
+    getTopic();
+  }, [updateTopicList]);
 
   return (
     <>

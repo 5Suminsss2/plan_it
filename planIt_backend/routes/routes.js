@@ -1,5 +1,6 @@
 const express = require("express");
 const Todo = require("../models/Todo");
+const Topic = require("../models/Topic");
 const router = express.Router();
 
 // 📌 GET 요청: 모든 Todo 가져오기
@@ -54,6 +55,29 @@ router.put("/todos/:id", async (req, res) => {
     res.json(updatedTodo); // 업데이트된 Todo 반환
   } catch (error) {
     res.status(500).json({ error: "Failed to update todo" });
+  }
+});
+
+// 📌 GET 요청: 모든 Todo 가져오기
+router.get("/topic", async (req, res) => {
+  try {
+    const topic = await Topic.find();
+    res.json(topic);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching topic" });
+  }
+});
+
+// 📌 POST 요청: 새로운 Todo 추가
+router.post("/topic", async (req, res) => {
+  console.log("enter");
+  try {
+    const { _id, title, color } = req.body;
+    const newTopic = new Topic({ _id, title, color });
+    await newTopic.save();
+    res.status(201).json(newTopic);
+  } catch (error) {
+    res.status(400).json({ message: "Error adding topic" });
   }
 });
 

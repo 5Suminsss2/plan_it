@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Todo } from "../types/todo";
+import { Topic } from "../types/modal";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL, // Vite 환경 변수 사용
@@ -29,5 +30,20 @@ export const todosApi = {
   // 데이터 todo 수정
   updateTodo: async (id: string, todo: Partial<Todo>) => {
     await apiClient.put(`/api/todos/${id}`, todo);
+  },
+};
+
+// topic 관련 api
+export const topicApi = {
+  // topic 가져오기
+  getTopic: async () => {
+    const response = await apiClient.get("/api/topic");
+    return response.data;
+  },
+
+  // topic 추가
+  addTopic: async (topic: Topic) => {
+    const response = await apiClient.post("/api/topic", topic);
+    return response.data;
   },
 };

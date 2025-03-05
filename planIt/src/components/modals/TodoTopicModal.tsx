@@ -58,7 +58,7 @@ const TodoTopicModal = ({
               {topicList?.map((res) => {
                 return (
                   <div
-                    key={res.id}
+                    key={res._id}
                     className={
                       "flex relative group p-2 m-2 rounded-md cursor-pointer font-semibold h-[40px]"
                     }
@@ -73,7 +73,7 @@ const TodoTopicModal = ({
                     <p>{res.title}</p>
                     <button
                       onClick={() => {
-                        handleRemoveTopic(res.id);
+                        handleRemoveTopic(res._id);
                       }}
                       className="w-7 h-7 ml-2 items-center justify-center bg-[#ffffff] rounded-full hover:bg-red-700 focus:outline-none hidden group-hover:block"
                     >
