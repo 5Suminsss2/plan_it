@@ -2,6 +2,7 @@ import { TodoTopicModalProps } from "../../types/modal";
 import { HexColorPicker } from "react-colorful";
 import _ from "lodash";
 import ModalHeader from "./ModalHeader";
+import { useEffect, useState } from "react";
 
 const TodoTopicModal = ({
   handleShowModal,
@@ -13,6 +14,28 @@ const TodoTopicModal = ({
   topicColor,
   setTopicColor,
 }: TodoTopicModalProps) => {
+  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
+
+  // color picker 외부 클릭 시 모달 창 닫는 기능 설정
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+
+      if (!target.closest(".color-dropdown")) {
+        setIsColorPickerOpen(false);
+      }
+    };
+
+    if (isColorPickerOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isColorPickerOpen]);
+
+  // 버튼 클릭 시 토글
+  const toggleColorPicker = () => setIsColorPickerOpen((prev) => !prev);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ">
       <div className="modal-box h-[50vh]">
@@ -21,22 +44,27 @@ const TodoTopicModal = ({
           title="토픽 추가"
           modalId="modal_topic"
         />
-
-        <div className="modal-action flex-col ">
+        <div className="modal-action flex-col">
           <div className="flex items-center space-x-3">
-            <details className="dropdown">
-              <summary className="btn m-1 rounded-full bg-[#f8f9fb] p-3 shadow-md hover:shadow-lg active:shadow-md transition-shadow">
+            <div>
+              <div
+                className={`btn m-1 rounded-full p-3 shadow-md hover:shadow-lg active:shadow-md transition-shadow cursor-pointer`}
+                onClick={toggleColorPicker}
+                style={{ backgroundColor: topicColor }} // Notice :: tailwind는 동적 클래스명을 이해하지 못해 style로 설정해야함
+              >
                 🎨
-              </summary>
-              <div className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                <HexColorPicker
-                  color={topicColor}
-                  onChange={setTopicColor}
-                  tabIndex={0}
-                  className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-                />
               </div>
-            </details>
+
+              {isColorPickerOpen && (
+                <div className="absolute bg-base-100 rounded-box z-[1] w-52 p-2 shadow color-dropdown">
+                  <HexColorPicker
+                    color={topicColor}
+                    onChange={setTopicColor}
+                    tabIndex={0}
+                  />
+                </div>
+              )}
+            </div>
             <input
               type="text"
               value={topicTitle}
