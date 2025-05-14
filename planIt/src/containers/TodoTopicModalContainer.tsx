@@ -49,11 +49,9 @@ const TodoTopicModalContainer = ({
 
   // 토픽 삭제 함수
   // todo: topic 삭제 api함수 만들기
-  const handleRemoveTopic = (id: string) => {
-    // const test = _.remove(topicList, (n) => {
-    //   return n.id !== id;
-    // });
-    // updateTopicList(test);
+  const handleRemoveTopic = async (id: string) => {
+    await topicApi.removeTopic(id);
+    setRefreshTrigger((prev) => prev + 1); // topic 데이터 리프레시
   };
 
   // topic 데이터 가져오기

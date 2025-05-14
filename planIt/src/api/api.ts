@@ -46,4 +46,9 @@ export const topicApi = {
     const response = await apiClient.post("/api/topic", topic);
     return response.data;
   },
+
+  // topic 삭제
+  removeTopic: async (id: string) => {
+    await apiClient.delete(`/api/topic/${id}`);
+  },
 };

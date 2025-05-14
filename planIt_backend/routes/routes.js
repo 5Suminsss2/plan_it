@@ -81,4 +81,20 @@ router.post("/topic", async (req, res) => {
   }
 });
 
+// 📌 DELETE 요청: 특정 Topic 삭제 (커스텀 _id 사용 시)
+router.delete("/topic/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedTopic = await Topic.findOneAndDelete({ _id: id });
+
+    if (!deletedTopic) {
+      return res.status(404).json({ message: "Topic not found" });
+    }
+
+    res.json({ message: "Topic deleted successfully", deletedTopic });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting topic" });
+  }
+});
+
 module.exports = router;
