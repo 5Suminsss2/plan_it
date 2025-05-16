@@ -1,3 +1,5 @@
+import { Todo } from "./todo";
+
 export interface Topic {
   _id: string;
   title: string;
@@ -16,6 +18,16 @@ export interface TodoTopicModalProps extends TodoTopicModalContainerProps {
   topicList: Topic[];
   topicColor: string;
   setTopicColor: (value: string) => void;
+}
+
+export interface PreTodosModalProps extends TodoTopicModalContainerProps {
+  preTodos: Todo[];
+  topicList: Topic[];
+  checkedIds: string[];
+  allChecked: boolean;
+  toggleCheck: (id: string) => void;
+  toggleAll: () => void;
+  handleApplyPreTodos: (todos: Todo[]) => void;
 }
 
 export interface ModalHeaderProps extends TodoTopicModalContainerProps {

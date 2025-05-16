@@ -13,6 +13,16 @@ router.get("/todos", async (req, res) => {
   }
 });
 
+// 📌 GET 요청: state가 pre인 모든 Todo 가져오기
+router.get("/todos/pre", async (req, res) => {
+  try {
+    const preTodos = await Todo.find({ state: "pre" });
+    res.status(200).json(preTodos);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err });
+  }
+});
+
 // 📌 POST 요청: 새로운 Todo 추가
 router.post("/todos", async (req, res) => {
   try {

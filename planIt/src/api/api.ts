@@ -16,6 +16,12 @@ export const todosApi = {
     return response.data;
   },
 
+  // state값이 pre인 데이터 todos 가져오기
+  getPreTodos: async () => {
+    const response = await apiClient.get("/api/todos/pre");
+    return response.data;
+  },
+
   // 데이터 todo 추가
   addTodo: async (todo: Todo) => {
     const response = await apiClient.post("/api/todos", todo);
