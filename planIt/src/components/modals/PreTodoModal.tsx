@@ -8,8 +8,8 @@ const PreTodoModal = ({
   handleApplyPreTodos,
   preTodos,
   topicList,
-  checkedIds,
   allChecked,
+  checkedItems,
   toggleCheck,
   toggleAll,
 }: PreTodosModalProps) => {
@@ -44,8 +44,8 @@ const PreTodoModal = ({
                 >
                   <input
                     type="checkbox"
-                    checked={checkedIds.includes(res._id)}
-                    onChange={() => toggleCheck(res._id)}
+                    checked={checkedItems.some((i) => i._id === res._id)}
+                    onChange={() => toggleCheck(res)}
                     className="checkbox checkbox-sm bg-white border-gray-400"
                   />
                   <span
@@ -68,10 +68,10 @@ const PreTodoModal = ({
           <div
             className="flex justify-center items-center"
             onClick={() => {
-              handleApplyPreTodos(checkedIds);
+              handleApplyPreTodos(checkedItems);
             }}
           >
-            <div className="px-3 py-2 mt-5 bg-metal bg-opacity-50 w-fit text-white rounded">
+            <div className="px-3 py-2 mt-5 bg-metal bg-opacity-50 w-fit text-white rounded cursor-pointer">
               오늘 TODO에 추가하기
             </div>
           </div>

@@ -23,9 +23,9 @@ export interface TodoTopicModalProps extends TodoTopicModalContainerProps {
 export interface PreTodosModalProps extends TodoTopicModalContainerProps {
   preTodos: Todo[];
   topicList: Topic[];
-  checkedIds: string[];
+  checkedItems: Todo[];
   allChecked: boolean;
-  toggleCheck: (id: string) => void;
+  toggleCheck: (item: Todo) => void;
   toggleAll: () => void;
   handleApplyPreTodos: (todos: Todo[]) => void;
 }

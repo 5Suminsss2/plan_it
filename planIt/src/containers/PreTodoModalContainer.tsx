@@ -13,31 +13,35 @@ const PreTodoModalContainer = ({
 }: TodoTopicModalContainerProps) => {
   const { topicList } = topicStore((state) => state);
   const [preTodos, setPreTodos] = useState<Todo[]>([]); // 상태값이 pre인 todo 데이터
-  const [checkedIds, setCheckedIds] = useState<string[]>([]); // 체크박스 상태
+  const [checkedItems, setCheckedItems] = useState<Todo[]>([]);
 
   // 전체 체크 여부
-  const allChecked =
-    checkedIds.length === preTodos.length && preTodos.length > 0;
+  const allChecked = preTodos.every((todo) =>
+    checkedItems.some((item) => item._id === todo._id)
+  );
 
   // 체크 함수
-  const toggleCheck = (id: string) => {
-    setCheckedIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+  const toggleCheck = (item: Todo) => {
+    setCheckedItems(
+      (prev) =>
+        prev.find((i) => i._id === item._id)
+          ? prev.filter((i) => i._id !== item._id) // 이미 있으면 제거
+          : [...prev, item] // 없으면 추가
     );
   };
 
   // 전체 체크 함수
   const toggleAll = () => {
     if (allChecked) {
-      setCheckedIds([]);
+      setCheckedItems([]);
     } else {
-      setCheckedIds(preTodos.map((todo) => todo._id));
+      setCheckedItems(preTodos);
     }
   };
 
   // 오늘 TODOS에 PRE TODO 추가하기
-  const handleApplyPreTodos = (checkedIds) => {
-    console.log("야호~", checkedIds);
+  const handleApplyPreTodos = (checkedItems: Todo[]) => {
+    console.log("야호~", checkedItems);
   };
 
   // 데이터 todoList 가져오기
@@ -61,7 +65,7 @@ const PreTodoModalContainer = ({
         topicList={topicList}
         handleApplyPreTodos={handleApplyPreTodos}
         preTodos={preTodos}
-        checkedIds={checkedIds}
+        checkedItems={checkedItems}
         allChecked={allChecked}
         toggleCheck={toggleCheck}
         toggleAll={toggleAll}
