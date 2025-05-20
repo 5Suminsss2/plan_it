@@ -27,10 +27,20 @@ router.get("/todos", async (req, res) => {
 });
 
 // 📌 GET 요청: state가 pre인 모든 Todo 가져오기
-// Todo : 오늘꺼 제외하고 받아오기
 router.get("/todos/pre", async (req, res) => {
   try {
-    const preTodos = await Todo.find({ state: "pre" });
+    // 오늘 날짜 범위 계산
+    const today = new Date();
+    const startOfToday = new Date(today.setHours(0, 0, 0, 0));
+    const startOfTomorrow = new Date(startOfToday);
+    startOfTomorrow.setDate(startOfToday.getDate() + 1);
+
+    // state가 pre이고 오늘 날짜가 아닌 Todo 가져오기
+    const preTodos = await Todo.find({
+      state: "pre",
+      createdAt: { $lt: startOfToday }, // 오늘보다 이전
+    });
+
     res.status(200).json(preTodos);
   } catch (err) {
     res.status(500).json({ message: "Server Error", error: err });
