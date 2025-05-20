@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { PreTodosModalProps } from "../../types/modal";
 import ModalHeader from "./ModalHeader";
 import _ from "lodash";

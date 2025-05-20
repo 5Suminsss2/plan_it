@@ -17,7 +17,8 @@ const TodoContainer = () => {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // 현재 날짜
-  const currentDate = dayjs().format("YY.MM.DD");
+  const currentDate = dayjs().format("YYYY-MM-DD");
+  const [selectedDate, setSelectedDate] = useState(currentDate);
 
   // 할일목록 제출 함수
   const handleSubmit = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -39,7 +40,7 @@ const TodoContainer = () => {
       setNewTodo("");
       setSelectedTopic("");
 
-      await todosApi.addTodo(newTodoObj);
+      await todosApi.addTodo([newTodoObj]);
       setRefreshTrigger((prev) => prev + 1); // 데이터 todolist 리프레시
     }
   };
@@ -94,7 +95,7 @@ const TodoContainer = () => {
   useEffect(() => {
     const getTodos = async () => {
       try {
-        const data = await todosApi.getTodos();
+        const data = await todosApi.getTodos({ date: selectedDate });
         setTodoList(data);
       } catch (error) {
         console.error("Failed to fetch todos", error);
@@ -102,7 +103,7 @@ const TodoContainer = () => {
     };
 
     getTodos();
-  }, [refreshTrigger]);
+  }, [selectedDate, refreshTrigger]);
 
   // topic 가져오기
   useEffect(() => {
@@ -121,7 +122,8 @@ const TodoContainer = () => {
   return (
     <>
       <TodoBox
-        currentDate={currentDate}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
         handleSubmit={handleSubmit}
         handleNewTodo={handleNewTodo}
         handleSelectedTopic={handleSelectedTopic}

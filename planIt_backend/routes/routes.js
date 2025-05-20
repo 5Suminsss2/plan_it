@@ -6,14 +6,28 @@ const router = express.Router();
 // 📌 GET 요청: 모든 Todo 가져오기
 router.get("/todos", async (req, res) => {
   try {
-    const todos = await Todo.find();
-    res.json(todos);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching todos" });
+    const { date } = req.query;
+
+    if (date) {
+      const start = new Date(`${date}T00:00:00.000Z`);
+      const end = new Date(`${date}T23:59:59.999Z`);
+
+      const todos = await Todo.find({
+        createdAt: { $gte: start, $lte: end },
+      });
+
+      return res.json(todos);
+    }
+
+    const allTodos = await Todo.find();
+    res.json(allTodos);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 });
 
 // 📌 GET 요청: state가 pre인 모든 Todo 가져오기
+// Todo : 오늘꺼 제외하고 받아오기
 router.get("/todos/pre", async (req, res) => {
   try {
     const preTodos = await Todo.find({ state: "pre" });
@@ -23,15 +37,47 @@ router.get("/todos/pre", async (req, res) => {
   }
 });
 
-// 📌 POST 요청: 새로운 Todo 추가
+// 📌 POST 요청 : preTodo 오늘 할일로 바꾸기
+router.post("/todos/move-to-today", async (req, res) => {
+  try {
+    const todos = req.body;
+
+    // 1. 기존 todo 삭제
+    const idsToDelete = todos.map((t) => t._id);
+    await Todo.deleteMany({ _id: { $in: idsToDelete } });
+
+    // 2. createdAt만 새로 설정해서 다시 저장
+    const today = new Date();
+    const newTodos = todos.map(({ _id, title, topic, state }) => ({
+      _id,
+      title,
+      topic,
+      state,
+      createdAt: today,
+    }));
+
+    const result = await Todo.insertMany(newTodos);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to move todos to today" });
+  }
+});
+
+// 📌 POST 요청: 여러 개의 Todo 추가
 router.post("/todos", async (req, res) => {
   try {
-    const { _id, title, topic, state } = req.body;
-    const newTodo = new Todo({ _id, title, topic, state });
-    await newTodo.save();
-    res.status(201).json(newTodo);
+    const todos = req.body; // 배열로 들어온다고 가정
+
+    if (!Array.isArray(todos)) {
+      return res.status(400).json({ message: "Expected an array of todos" });
+    }
+
+    const newTodos = await Todo.insertMany(todos); // 한 번에 저장
+    res.status(201).json(newTodos);
   } catch (error) {
-    res.status(400).json({ message: "Error adding todo" });
+    res.status(400).json({ message: "Error adding todos" });
   }
 });
 

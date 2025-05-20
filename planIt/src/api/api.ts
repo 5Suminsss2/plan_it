@@ -11,8 +11,8 @@ const apiClient = axios.create({
 
 export const todosApi = {
   // 데이터 todos 가져오기
-  getTodos: async () => {
-    const response = await apiClient.get("/api/todos");
+  getTodos: async (params?: { date?: string }) => {
+    const response = await apiClient.get("/api/todos", { params });
     return response.data;
   },
 
@@ -23,7 +23,13 @@ export const todosApi = {
   },
 
   // 데이터 todo 추가
-  addTodo: async (todo: Todo) => {
+  addPreTodos: async (todo: Todo[]) => {
+    const response = await apiClient.post("/api/todos/move-to-today", todo);
+    return response.data;
+  },
+
+  // 데이터 todo 추가
+  addTodo: async (todo: Todo[]) => {
     const response = await apiClient.post("/api/todos", todo);
     return response.data;
   },

@@ -21,7 +21,8 @@ interface TodoHandlers {
 
 //- TodoBoxProps 타입
 export interface TodoBoxProps extends TodoHandlers {
-  currentDate: string;
+  selectedDate: string;
+  setSelectedDate: (value: string) => void;
   handleSubmit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleNewTodo: (value: string) => void;
   handleSelectedTopic: (value: string) => void;

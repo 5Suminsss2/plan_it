@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import PreTodoModal from "../components/modals/PreTodoModal";
 import { TodoTopicModalContainerProps } from "../types/modal";
-import _ from "lodash";
 import topicStore from "../store/topic";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { todosApi } from "../api/api";
 import { Todo } from "../types/todo";
+import { v4 as uuidv4 } from "uuid";
 
 const PreTodoModalContainer = ({
   handleShowModal,
@@ -40,8 +40,8 @@ const PreTodoModalContainer = ({
   };
 
   // 오늘 TODOS에 PRE TODO 추가하기
-  const handleApplyPreTodos = (checkedItems: Todo[]) => {
-    console.log("야호~", checkedItems);
+  const handleApplyPreTodos = async (checkedItems: Todo[]) => {
+    await todosApi.addPreTodos(checkedItems);
   };
 
   // 데이터 todoList 가져오기

@@ -5,7 +5,8 @@ import TodoTopicModalContainer from "../../containers/TodoTopicModalContainer";
 import PreTodoModalContainer from "../../containers/PreTodoModalContainer";
 
 const TodoBox = ({
-  currentDate,
+  selectedDate,
+  setSelectedDate,
   handleSubmit,
   handleNewTodo,
   handleSelectedTopic,
@@ -22,7 +23,13 @@ const TodoBox = ({
   return (
     <div className="todo-box">
       <section className="flex justify-between px-3.5 py-2">
-        <div className="text-xl font-bold">{currentDate}</div>
+        <div className="text-xl font-bold">
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </div>
         <div className="flex space-x-5">
           <button
             className="btn btn-active btn-neutral"
@@ -54,7 +61,7 @@ const TodoBox = ({
         >
           <option>토픽 선택</option>
           {topicList.map((option) => (
-            <option key={option.id} value={option.title}>
+            <option key={option._id} value={option.title}>
               {option.title}
             </option>
           ))}
