@@ -1,0 +1,37 @@
+/* 기본 이벤트 바 안 보이게 */
+.fc-event {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 셀 안을 4등분하기 위한 기본 셋업 */
+.fc-daygrid-day-frame {
+  position: relative;
+}
+
+/* 공통 이모지 스타일 */
+.emoji-quadrant {
+  position: absolute;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* 각 사분면 위치 */
+.bottom-left {
+  top: 62px;
+  left: 32px;
+}
+.bottom-right {
+  top: 61px;
+  right: 32px;
+}
+.top-left {
+  bottom: -20px;
+  left: 32px;
+}
+.top-right {
+  bottom: -19px;
+  right: 32px;
+}

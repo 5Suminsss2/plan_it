@@ -3,6 +3,7 @@ import "./TodoBox.css";
 import TodoLists from "./TodoLists";
 import TodoTopicModalContainer from "../../containers/TodoTopicModalContainer";
 import PreTodoModalContainer from "../../containers/PreTodoModalContainer";
+import { useNavigate } from "react-router-dom";
 
 const TodoBox = ({
   selectedDate,
@@ -20,6 +21,7 @@ const TodoBox = ({
   selectedTopic,
   groupedData,
 }: TodoBoxProps) => {
+  const navigate = useNavigate();
   return (
     <div className="todo-box">
       <section className="flex justify-between px-3.5 py-2">
@@ -45,7 +47,8 @@ const TodoBox = ({
           </button>
           <button
             className="btn btn-active btn-neutral"
-            onClick={() => handleShowModal("modal_routine", true)}
+            // onClick={() => handleShowModal("modal_routine", true)}
+            onClick={() => navigate("/progressCalendar")}
           >
             루틴 팝업
           </button>
