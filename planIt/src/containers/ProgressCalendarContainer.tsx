@@ -2,35 +2,41 @@ import { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid"; // 먼저 import 필요
+import AddDoneModal from "../components/modals/AddDoneModal";
 import { EventContentArg } from "@fullcalendar/core";
-import dayjs from "dayjs";
-
 export default function ProgressCalendarContainer() {
-  const [events, setEvents] = useState([
-    { title: "처음 일정", date: "2025-05-21" },
-  ]);
+  const [events, setEvents] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateClick = (arg: DateClickArg) => {
-    // 등록한 현재 시각 가져오기
-    const now = dayjs();
-    const hourStr = now.hour().toString().padStart(2, "0");
-    const minuteStr = now.minute().toString().padStart(2, "0");
+    setSelectedDate(arg.dateStr);
+    setModalOpen(true);
+  };
 
+  const handleAddEvent = (data: {
+    user: string;
+    hour: string;
+    minute: string;
+    subject: string;
+    correct: number;
+    total: number;
+  }) => {
     const newEvent = {
-      title: `${hourStr}:${minuteStr} \n DAY2 18/20 \n 🦄`,
-      date: arg.dateStr,
-      backgroundColor: "#ff7171",
+      title: `${data.subject}\n${data.correct}/${data.total}\n${data.user.label}`,
+      date: selectedDate,
+      backgroundColor: data.user.value,
       borderColor: "white",
       textColor: "white",
       extendedProps: {
-        location: "회의실 A",
+        location: "회의실",
         description: "팀 주간 회의",
         category: "단어시험",
       },
     };
 
     setEvents([...events, newEvent]);
+    setModalOpen(false);
   };
 
   // \n -> <div> 태그로 변경
@@ -47,12 +53,20 @@ export default function ProgressCalendarContainer() {
   };
 
   return (
-    <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-      initialView="dayGridMonth"
-      dateClick={handleDateClick}
-      events={events}
-      eventContent={renderEventContent}
-    />
+    <>
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        dateClick={handleDateClick}
+        events={events}
+        eventContent={renderEventContent}
+      />
+
+      <AddDoneModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        handleAddEvent={handleAddEvent}
+      />
+    </>
   );
 }
