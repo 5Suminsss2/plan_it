@@ -1,30 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ModalHeader from "./ModalHeader";
 import Select from "react-select";
+import { addDoneModal } from "../../types/calendar";
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (data: {
-    user: string;
-    hour: string;
-    minute: string;
-    subject: string;
-    correct: string;
-    total: string;
-  }) => void;
-}
-
-export default function AddDoneModal({
-  isOpen,
-  onClose,
-  handleAddEvent,
-  handleShowModal,
-}: Props) {
+const AddDoneModal = ({ isOpen, onClose, handleAddEvent }: addDoneModal) => {
   const now = new Date();
-  const defaultHour = now.getHours().toString().padStart(2, "0");
-  const defaultMinute = now.getMinutes().toString().padStart(2, "0");
 
+  // Todo : user 입력 받아오는 기능 만들기
   const userOptions = [
     { value: "#ff0156", label: "🦄 김수냄" },
     { value: "#ff7171", label: "🐹 김냄수" },
@@ -32,28 +14,31 @@ export default function AddDoneModal({
 
   const hourOptions = Array.from({ length: 24 }).map((_, i) => {
     const h = i.toString().padStart(2, "0");
-    return { value: h, label: h };
+    return { value: h, label: `${i}시` };
   });
 
   const minuteOptions = Array.from({ length: 60 }).map((_, i) => {
     const m = i.toString().padStart(2, "0");
-    return { value: m, label: m };
+    return { value: m, label: `${i}분` };
   });
 
+  // 현재시간 가져오기
+  const hourValue = now.getHours().toString().padStart(2, "0");
+  const minuteValue = now.getMinutes().toString().padStart(2, "0");
+
+  const defaultHour =
+    hourOptions.find((opt) => opt.value === hourValue) || hourOptions[0];
+
+  const defaultMinute =
+    minuteOptions.find((opt) => opt.value === minuteValue) || minuteOptions[0];
+
   const [user, setUser] = useState(userOptions[0]); // 초기값을 전체 객체로 설정
-  const [hour, setHour] = useState("시");
-  const [minute, setMinute] = useState("분"); // value는 { value: "00", label: "00" }
+  const [hour, setHour] = useState(defaultHour);
+  const [minute, setMinute] = useState(defaultMinute); // value는 { value: "00", label: "00" }
 
   const [subject, setSubject] = useState("");
   const [correct, setCorrect] = useState("");
   const [total, setTotal] = useState("");
-
-  useEffect(() => {
-    if (isOpen) {
-      setHour(defaultHour);
-      setMinute(defaultMinute);
-    }
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -68,8 +53,8 @@ export default function AddDoneModal({
       total: total,
     };
     setUser(userOptions[0]);
-    setHour("시");
-    setMinute("분");
+    setHour(defaultHour);
+    setMinute(defaultMinute);
     setSubject("");
     setCorrect("");
     setTotal("");
@@ -84,7 +69,7 @@ export default function AddDoneModal({
       <div className="modal-box h-[45vh] flex flex-col">
         {/* ModalHeader는 좌측 정렬(기본) */}
         <ModalHeader
-          handleShowModal={handleShowModal}
+          handleShowModal={onClose}
           title="인증하기"
           modalId="modal_topic"
         />
@@ -177,4 +162,6 @@ export default function AddDoneModal({
       </div>
     </div>
   );
-}
+};
+
+export default AddDoneModal;
