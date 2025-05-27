@@ -5,6 +5,12 @@ export interface participants {
 }
 
 export interface PlanType {
+  id: number;
+  title: string;
+  participants: participants[];
+}
+
+export interface SharedPlanCardProps {
   title: string;
   participants: participants[];
 }

@@ -3,6 +3,7 @@ import { PlanType } from "../types/shardPlan";
 
 const plans: PlanType[] = [
   {
+    id: 1,
     title: "단어 암기 챌린지",
     participants: [
       { name: "민수", emoji: "😀", color: "#FFB300" }, // 주황
@@ -12,6 +13,7 @@ const plans: PlanType[] = [
     ],
   },
   {
+    id: 2,
     title: "수학 문제 풀이",
     participants: [
       { name: "민수", emoji: "😀", color: "#FFB300" },
@@ -20,6 +22,7 @@ const plans: PlanType[] = [
     ],
   },
   {
+    id: 3,
     title: "영어 회화 연습",
     participants: [
       { name: "민수", emoji: "😀", color: "#FFB300" },
@@ -30,6 +33,7 @@ const plans: PlanType[] = [
     ],
   },
   {
+    id: 4,
     title: "과학 실험",
     participants: [
       { name: "민수", emoji: "😀", color: "#FFB300" },
@@ -37,6 +41,7 @@ const plans: PlanType[] = [
     ],
   },
   {
+    id: 5,
     title: "독서 토론",
     participants: [
       { name: "민수", emoji: "😀", color: "#FFB300" },
@@ -48,16 +53,19 @@ const plans: PlanType[] = [
   // ...더 많은 카드 데이터
 ];
 
-const sharedPlan = () => (
-  <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2 py-6 justify-items-center cursor-pointer">
-    {plans.map((plan, idx) => (
-      <SharedPlanCard
-        key={idx}
-        title={plan.title}
-        participants={plan.participants}
-      />
-    ))}
-  </div>
-);
+const sharedPlan = () => {
+  return (
+    <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2 py-6 justify-items-center cursor-pointer">
+      {plans.map((plan) => (
+        <SharedPlanCard
+          key={plan.id}
+          id={plan.id}
+          title={plan.title}
+          participants={plan.participants}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default sharedPlan;
