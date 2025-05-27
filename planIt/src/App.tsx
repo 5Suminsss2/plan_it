@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProgressCalendar from "./pages/ProgressCalendar";
+import SharedPlan from "./pages/SharedPlan";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/progressCalendar" element={<ProgressCalendar />} />
+        <Route path="/sharedPlan" element={<SharedPlan />} />
         {/* <Route path="/about" element={<About />} /> */}
       </Routes>
     </Router>
