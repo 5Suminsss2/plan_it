@@ -150,7 +150,7 @@ const AddSharedPlanModal = ({
                   <span className="text-xl">{u.emoji}</span>
                   <span className="text-sm font-medium">{u.name}</span>
                   <span
-                    className="w-4 h-4 rounded-full border"
+                    className="w-4 h-4 rounded-full "
                     style={{ backgroundColor: u.color }}
                   />
                   <button
