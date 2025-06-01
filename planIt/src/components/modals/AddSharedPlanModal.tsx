@@ -79,68 +79,68 @@ const AddSharedPlanModal = ({
             </div>
 
             {/* 유저 등록 */}
-            <div className="flex items-center gap-2">
-              <label className="whitespace-nowrap text-sm font-medium">
+            <div className="flex items-start gap-2">
+              {/* 왼쪽: 고정 폭 라벨 */}
+              <label className="whitespace-nowrap text-sm font-medium w-24 pt-2 text-left">
                 유저 등록
               </label>
 
-              {/* 이름, 색깔, 이모지 */}
-              <input
-                type="text"
-                name="name"
-                placeholder="이름"
-                value={user.name}
-                onChange={handleChange}
-                className="border rounded px-2 py-1 text-sm"
-              />
+              {/* 오른쪽: input 영역을 w-full로 맞춤 */}
+              <div className="flex-1 flex items-center gap-2">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="이름"
+                  value={user.name}
+                  onChange={handleChange}
+                  className="w-full border rounded px-2 py-1 text-sm"
+                />
 
-              {/* 색깔 */}
-              <input
-                type="color"
-                name="color"
-                value={user.color}
-                onChange={handleChange}
-                className="w-18 h-8 p-0 border rounded"
-              />
+                <input
+                  type="color"
+                  name="color"
+                  value={user.color}
+                  onChange={handleChange}
+                  className="w-10 h-8 p-0 border rounded"
+                />
 
-              {/* 이모지 선택 */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowPicker((prev) => !prev)}
-                  className="border rounded px-2 py-1 text-sm h-9 flex items-center gap-2"
-                >
-                  {user.emoji ? (
-                    <span className="text-lg">{user.emoji}</span>
-                  ) : (
-                    <span className="text-gray-500">💙</span>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowPicker((prev) => !prev)}
+                    className="border rounded px-2 py-1 text-sm h-9 flex items-center"
+                  >
+                    {user.emoji ? (
+                      <span className="text-lg">{user.emoji}</span>
+                    ) : (
+                      <span className="text-gray-500">💙</span>
+                    )}
+                  </button>
+
+                  {showPicker && (
+                    <div className="absolute right-0 z-10 scale-60">
+                      <EmojiPicker
+                        onEmojiClick={(emojiData) => {
+                          setUser((prev) => ({
+                            ...prev,
+                            emoji: emojiData.emoji,
+                          }));
+                          setShowPicker(false);
+                        }}
+                      />
+                    </div>
                   )}
+                </div>
+
+                <button
+                  onClick={addUser}
+                  className="bg-silver rounded-full px-2 py-1 text-sm h-9 flex items-center"
+                >
+                  <span className="text-gray-500">✔</span>
                 </button>
-
-                {showPicker && (
-                  <div className="absolute right-0 z-10 scale-60">
-                    <EmojiPicker
-                      onEmojiClick={(emojiData) => {
-                        setUser((prev) => ({
-                          ...prev,
-                          emoji: emojiData.emoji,
-                        }));
-                        setShowPicker(false);
-                      }}
-                    />
-                  </div>
-                )}
               </div>
-
-              {/* 등록 버튼 */}
-              <button
-                onClick={addUser}
-                className="bg-silver rounded-full px-2 py-1 text-sm h-9 flex items-center gap-2"
-              >
-                <span className="text-gray-500">✔</span>
-              </button>
             </div>
-            {/* 유저 목록 */}
 
+            {/* 유저 목록 */}
             <ul className="space-y-2">
               {users.map((u) => (
                 <li
