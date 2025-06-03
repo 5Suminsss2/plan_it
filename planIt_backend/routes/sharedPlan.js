@@ -2,36 +2,30 @@ const express = require("express");
 const SharedPlan = require("../models/SharedPlan");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  try {
-    const topics = await SharedPlan.find();
-    res.json(topics);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching topic" });
-  }
+let plans = [];
+
+// 모든 계획 가져오기
+router.get("/", (req, res) => {
+  return res.json(plans);
 });
 
-router.post("/", async (req, res) => {
+// 계획 등록
+router.post("/", (req, res) => {
   try {
-    const { _id, title, color } = req.body;
-    const newTopic = new SharedPlan({ _id, title, color });
-    await newTopic.save();
-    res.status(201).json(newTopic);
-  } catch (error) {
-    res.status(400).json({ message: "Error adding topic" });
-  }
-});
+    const { id, title, participants } = req.body;
 
-router.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedTopic = await SharedPlan.findOneAndDelete({ _id: id });
-    if (!deletedTopic) {
-      return res.status(404).json({ message: "Topic not found" });
+    // 유효성 검사
+    if (!id || !title || !Array.isArray(participants)) {
+      return res.status(400).json({ message: "필수 정보가 부족합니다." });
     }
-    res.json({ message: "Topic deleted successfully", deletedTopic });
+
+    const newPlan = { id, title, participants };
+    plans.push(newPlan);
+
+    res.status(201).json({ message: "계획이 추가되었습니다.", plan: newPlan });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting topic" });
+    console.error("계획 추가 중 에러:", error);
+    res.status(500).json({ message: "서버 에러가 발생했습니다." });
   }
 });
 

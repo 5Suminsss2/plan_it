@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface participants {
   id: number;
   name: string;
@@ -19,5 +21,6 @@ export interface SharedPlanCardProps {
 export interface addSharedPlanModal {
   isOpen: boolean;
   onClose: () => void;
-  handleAddPlan: (data: PlanType) => void;
+  handleAddPlan: () => void;
+  setRefreshTrigger: Dispatch<SetStateAction<number>>;
 }

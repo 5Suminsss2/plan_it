@@ -2,11 +2,13 @@ import { useState } from "react";
 import ModalHeader from "./ModalHeader";
 import { participants, addSharedPlanModal } from "../../types/shardPlan";
 import EmojiPicker from "emoji-picker-react";
+import { sharedPlanApi } from "../../api/api";
 
 const AddSharedPlanModal = ({
   isOpen,
   onClose,
   handleAddPlan,
+  setRefreshTrigger,
 }: addSharedPlanModal) => {
   const [title, setTitle] = useState("");
   const [users, setUsers] = useState<participants[] | []>([]);
@@ -47,9 +49,9 @@ const AddSharedPlanModal = ({
     setUser({ name: "", color: "#000000", emoji: "" });
     setUsers([]);
 
-    // await todosApi.addTodo([newTodoObj]);
-    // setRefreshTrigger((prev) => prev + 1); // 데이터 todolist 리프레시
-    handleAddPlan(data);
+    await sharedPlanApi.addSharedPlan(data);
+    setRefreshTrigger((prev) => prev + 1); // 데이터 todolist 리프레시
+    handleAddPlan();
   };
 
   return (
