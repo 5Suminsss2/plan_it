@@ -2,6 +2,7 @@ import axios from "axios";
 import { Todo } from "../types/todo";
 import { Topic } from "../types/modal";
 import { PlanType } from "../types/shardPlan";
+import { AddEventData } from "../types/calendar";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL, // Vite 환경 변수 사용
@@ -68,15 +69,27 @@ export const topicApi = {
 
 // SharedPlan 관련 api
 export const sharedPlanApi = {
-  // topic 가져오기
+  // SharedPlan 가져오기
   getSharedPlan: async () => {
     const response = await apiClient.get("/api/sharedPlan");
     return response.data;
   },
 
-  // topic 추가
+  // SharedPlan 추가
   addSharedPlan: async (data: PlanType) => {
     const response = await apiClient.post("/api/sharedPlan", data);
+    return response.data;
+  },
+
+  // SharedPlan 상세 가져오기
+  getSharedPlanDetail: async (id: string) => {
+    const response = await apiClient.get(`/api/sharedPlan/${id}`);
+    return response.data;
+  },
+
+  // SharedPlan 상세에 addDone 추가하기
+  addDonePlan: async (id: string, data: AddEventData) => {
+    const response = await apiClient.put(`/api/sharedPlan/${id}/addDone`, data);
     return response.data;
   },
 };

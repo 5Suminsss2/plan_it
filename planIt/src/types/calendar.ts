@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface optionData {
   value: string;
   label: string;
@@ -29,5 +31,7 @@ export type EventType = {
 export interface addDoneModal {
   isOpen: boolean;
   onClose: () => void;
-  handleAddEvent: (data: AddEventData) => void;
+  setModalOpen: (data: boolean) => void;
+  setRefreshTrigger: Dispatch<SetStateAction<number>>;
+  selectedDate: string | null;
 }

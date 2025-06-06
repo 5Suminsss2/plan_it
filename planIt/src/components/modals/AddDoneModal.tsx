@@ -2,8 +2,17 @@ import { useState } from "react";
 import ModalHeader from "./ModalHeader";
 import Select from "react-select";
 import { addDoneModal } from "../../types/calendar";
+import { useParams } from "react-router-dom";
+import { sharedPlanApi } from "../../api/api";
 
-const AddDoneModal = ({ isOpen, onClose, handleAddEvent }: addDoneModal) => {
+const AddDoneModal = ({
+  isOpen,
+  onClose,
+  setModalOpen,
+  setRefreshTrigger,
+  selectedDate,
+}: addDoneModal) => {
+  const { id } = useParams<{ id: string }>();
   const now = new Date();
 
   // Todo : user 입력 받아오는 기능 만들기
@@ -51,6 +60,7 @@ const AddDoneModal = ({ isOpen, onClose, handleAddEvent }: addDoneModal) => {
       subject: subject,
       correct: correct,
       total: total,
+      selectedDate: selectedDate,
     };
     setUser(userOptions[0]);
     setHour(defaultHour);
@@ -59,9 +69,9 @@ const AddDoneModal = ({ isOpen, onClose, handleAddEvent }: addDoneModal) => {
     setCorrect("");
     setTotal("");
 
-    // await todosApi.addTodo([newTodoObj]);
-    // setRefreshTrigger((prev) => prev + 1); // 데이터 todolist 리프레시
-    handleAddEvent(data);
+    await sharedPlanApi.addDonePlan(id as string, data);
+    setRefreshTrigger((prev) => prev + 1); // 데이터 리프레시
+    setModalOpen(false);
   };
 
   return (
