@@ -13,6 +13,7 @@ const ProgressCalendarContainer = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const { id } = useParams<{ id: string }>();
+  const [usersData, setUsersData] = useState([]);
 
   const handleDateClick = (arg: DateClickArg) => {
     setSelectedDate(arg.dateStr);
@@ -22,9 +23,18 @@ const ProgressCalendarContainer = () => {
   const renderEventContent = (eventInfo: EventContentArg) => {
     const lines = eventInfo.event.title.split("\n");
     return (
-      <div style={{ padding: "4px 6px" }}>
+      <div style={{ padding: "1px 1px" }}>
         {lines.map((line: string, index: number) => (
-          <div key={index}>{line}</div>
+          <div
+            key={index}
+            style={{
+              margin: 0,
+              padding: 0,
+              lineHeight: "1.3",
+            }}
+          >
+            {index === lines.length - 1 ? Array.from(line)[0] : line}
+          </div>
         ))}
       </div>
     );
@@ -54,6 +64,7 @@ const ProgressCalendarContainer = () => {
       try {
         const data = await sharedPlanApi.getSharedPlanDetail(id as string);
         const convertedData = convertDoneListToEvents(data.doneList);
+        setUsersData(data.participants);
         setEvents(convertedData);
       } catch (error) {
         console.error("Failed to fetch todos", error);
@@ -79,6 +90,7 @@ const ProgressCalendarContainer = () => {
         setModalOpen={setModalOpen}
         setRefreshTrigger={setRefreshTrigger}
         selectedDate={selectedDate}
+        usersData={usersData}
       />
     </>
   );

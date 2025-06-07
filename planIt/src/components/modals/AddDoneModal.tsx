@@ -11,15 +11,15 @@ const AddDoneModal = ({
   setModalOpen,
   setRefreshTrigger,
   selectedDate,
+  usersData,
 }: addDoneModal) => {
   const { id } = useParams<{ id: string }>();
   const now = new Date();
 
-  // Todo : user 입력 받아오는 기능 만들기
-  const userOptions = [
-    { value: "#ff0156", label: "🦄 김수냄" },
-    { value: "#ff7171", label: "🐹 김냄수" },
-  ];
+  const userOptions = usersData.map((user) => ({
+    value: user.id,
+    label: `${user.emoji} ${user.name}`,
+  }));
 
   const hourOptions = Array.from({ length: 24 }).map((_, i) => {
     const h = i.toString().padStart(2, "0");

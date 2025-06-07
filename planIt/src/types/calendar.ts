@@ -28,10 +28,19 @@ export type EventType = {
   };
 };
 
+export type UsersType = {
+  id: number;
+  name: string;
+  emoji: string;
+  color: string;
+  _id: string;
+};
+
 export interface addDoneModal {
   isOpen: boolean;
   onClose: () => void;
   setModalOpen: (data: boolean) => void;
   setRefreshTrigger: Dispatch<SetStateAction<number>>;
   selectedDate: string | null;
+  usersData: UsersType[];
 }

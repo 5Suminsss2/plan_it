@@ -29,7 +29,12 @@ const SharedPlanContainer = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2 py-6 justify-items-center cursor-pointer">
-      <button onClick={() => setModalOpen(true)}>추가</button>
+      <button
+        onClick={() => setModalOpen(true)}
+        className="w-full bg-violet-500 text-white py-2 px-4 rounded hover:bg-violet-600"
+      >
+        추가
+      </button>
       {plans.map((plan) => (
         <SharedPlanCard
           key={plan.id}

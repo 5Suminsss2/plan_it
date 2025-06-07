@@ -15,7 +15,7 @@ const SharedPlanCard = ({ id, title, participants }: PlanType) => {
       onClick={handleClick}
     >
       <div className="flex">
-        <div className="bg-gray-200 text-gray-700 rounded px-4 py-2 text-lg font-semibold">
+        <div className="bg-gray-100 text-gray-700 rounded px-4 py-2 text-lg font-semibold">
           {title}
         </div>
       </div>
