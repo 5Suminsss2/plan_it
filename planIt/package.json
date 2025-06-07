@@ -7,7 +7,6 @@
   "homepage": ".",
   "scripts": {
     "dev": "vite",
-    "start": "vite preview",
     "build": "tsc --noEmit && vite build --mode production",
     "electron-build": "electron-builder",
     "lint": "eslint .",
