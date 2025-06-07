@@ -17,7 +17,7 @@ const AddDoneModal = ({
   const now = new Date();
 
   const userOptions = usersData.map((user) => ({
-    value: user.id,
+    value: user.color,
     label: `${user.emoji} ${user.name}`,
   }));
 
