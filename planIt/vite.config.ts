@@ -5,6 +5,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: true, // 내부적으로 0.0.0.0 의미
+    host: "0.0.0.0", // 외부 접속 허용
+    allowedHosts: ["plan-it-frontend.onrender.com"], // 허용할 호스트 추가
+    port: 5173,
+    strictPort: true,
   },
 });
